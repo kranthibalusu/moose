@@ -30,7 +30,7 @@ MultiSmoothCircleIC::validParams()
                         "Plus or minus fraction of random variation in "
                         "the bubble radius for uniform, standard "
                         "deviation for normal");
-  MooseEnum rand_options("uniform normal none", "none");
+  MooseEnum rand_options("uniform normal none lognormal", "none");
   params.addParam<MooseEnum>("radius_variation_type",
                              rand_options,
                              "Type of distribution that random circle radii will follow");
@@ -85,6 +85,9 @@ MultiSmoothCircleIC::computeCircleRadii()
         break;
       case 2: // No variation
         _radii[i] = _radius;
+      case 3: // LogNormal distribution
+        _radii[i] = _random.randNormal(_tid, _radius, _radius_variation);
+        break;
     }
 
     _radii[i] = std::max(_radii[i], 0.0);
