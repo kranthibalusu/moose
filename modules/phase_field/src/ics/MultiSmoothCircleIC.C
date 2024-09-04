@@ -86,8 +86,8 @@ MultiSmoothCircleIC::computeCircleRadii()
       case 2: // No variation
         _radii[i] = _radius;
       case 3: // LogNormal distribution - Inputs and mean and varience
-        _expVal =  log(_radius^2/sqrt( _radius_variation +_radius^2) );
-        _sigma = sqrt(log(_radius_variation/_radius^2+1));
+        _expVal =  log(pow(_radius,2)/sqrt( _radius_variation +pow(_radius,2)) );
+        _sigma = sqrt(log(_radius_variation/pow(_radius,2)+1));
         _radii[i] = exp(_random.randNormal(_tid, _expVal, _sigma));
         break;
     }
